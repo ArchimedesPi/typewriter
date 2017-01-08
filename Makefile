@@ -1,5 +1,6 @@
 MCU := atmega328p
 F_CPU := 16000000UL
+BAUD := 9600
 PROG_TYPE := usbtiny
 
 CC := avr-gcc
@@ -14,7 +15,7 @@ DEPS:=$(SRCS:.c=.d)
 
 TARGET = $(lastword $(subst /, ,$(CURDIR)))
 
-CFLAGS = -DF_CPU=$(F_CPU) -Isrc/ -std=gnu99 -Wall -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -O2
+CFLAGS = -DF_CPU=$(F_CPU) -DBAUD=$(BAUD) -Isrc/ -std=gnu99 -Wall -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -O2
 LDFLAGS = -Wl,-Map,$(TARGET).map -Wl,--gc-sections
 ARCHFLAGS = -mmcu=$(MCU)
 
@@ -39,7 +40,7 @@ $(TARGET).elf: $(OBJS)
 	$(CC) $(LDFLAGS) $(ARCHFLAGS) $^ -o $@
 
 clean:
-	rm -f $(OBJECTS) $(DEPS) $(TARGET).*
+	rm -f $(OBJS) $(DEPS) $(TARGET).*
 
 flash: $(TARGET).hex
 	$(AVRDUDE) $(AVRDUDE_FLAGS) -U flash:w:$<

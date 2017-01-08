@@ -1,13 +1,17 @@
+#include <stdio.h>
 #include <stdbool.h>
 #include <avr/io.h>
 #include <util/delay.h>
 
+#include "util.h"
+#include "uart.h"
+
 int main() {
-	DDRB  = (1<<PB5);
-	PORTB = (1<<PB5);
+	uart_init();
+	stdout = &uart0out;
+
 	while (true) {
-		PORTB ^= (1<<PB5);
-		_delay_ms(1000);
+		printf("hello world!\n");
 	}
 	return 0;
 }
