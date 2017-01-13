@@ -8,10 +8,8 @@
 
 int main() {
 	uart_init();
+	stdin = &uart0in;
 	stdout = &uart0out;
 
-	while (true) {
-		printf("hello world!\n");
-	}
 	return 0;
 }

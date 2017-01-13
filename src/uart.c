@@ -26,12 +26,21 @@ int uart_strm_putchar(char c, FILE *stream) {
 }
 
 char uart_getchar() {
-	loop_until_bit_is_set(UCSR0B, RXC0); // wait for incoming data
+	loop_until_bit_is_set(UCSR0A, RXC0); // wait for incoming data
 	return UDR0; // return read value
 }
+
+/* just a wrapper to make FDEV_SETUP_STREAM happy */
+int uart_strm_getchar(FILE *stream) {
+	return uart_getchar();
+}
+
 
 FILE uart0out = FDEV_SETUP_STREAM(uart_strm_putchar, NULL,
                                   _FDEV_SETUP_WRITE);
 
- 
- 
+FILE uart0in = FDEV_SETUP_STREAM(NULL, uart_strm_getchar,
+                                  _FDEV_SETUP_READ);
+
+FILE uart0io = FDEV_SETUP_STREAM(uart_strm_putchar, uart_strm_getchar,
+                                  _FDEV_SETUP_RW);
