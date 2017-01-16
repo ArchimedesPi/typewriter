@@ -1,6 +1,9 @@
 #ifndef __UTIL_H__
 #define __UTIL_H__
 
+#include <stdint.h>
+#include <avr/io.h>
+
 #define UNUSED __attribute__ ((unused))
 
 /* convienient arithmetic types */
