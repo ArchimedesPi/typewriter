@@ -1,7 +1,8 @@
 MCU := atmega328p
 F_CPU := 16000000UL
-BAUD := 9600
 PROG_TYPE := usbtiny
+UART_TX0_BUFFER_SIZE := 128
+UART_RX0_BUFFER_SIZE := 128
 
 CC := avr-gcc
 OBJCOPY := avr-objcopy
@@ -15,7 +16,8 @@ DEPS:=$(SRCS:.c=.d)
 
 TARGET = $(lastword $(subst /, ,$(CURDIR)))
 
-CFLAGS = -DF_CPU=$(F_CPU) -DBAUD=$(BAUD) -Isrc/ -std=gnu99 -Wall -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -O2
+CFLAGS = -DF_CPU=$(F_CPU) -DUART_RX0_BUFFER_SIZE=$(UART_RX0_BUFFER_SIZE) -DUART_TX0_BUFFER_SIZE=$(UART_TX0_BUFFER_SIZE)
+CFLAGS += -Isrc/ -std=gnu99 -Wall -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -O2
 LDFLAGS = -Wl,-Map,$(TARGET).map -Wl,--gc-sections
 ARCHFLAGS = -mmcu=$(MCU)
 
