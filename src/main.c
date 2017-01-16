@@ -4,6 +4,7 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
+#include "config.h"
 #include "util.h"
 #include "uart.h"
 
