@@ -18,6 +18,6 @@ typedef int32_t i32;
 #define set_bit(x, bit) (_SFR_BYTE(x) |= _BV(bit))
 #define clear_bit(x, bit) (_SFR_BYTE(x) &= ~_BV(bit))
 #define toggle_bit(x, bit) (_SFR_BYTE(x) ^= _BV(bit))
-#define check_bit(x, bit) {_SFR_BYTE(x) & (1<<_BV(bit))
+#define check_bit(x, bit) (_SFR_BYTE(x) & (1<<_BV(bit)))
 
 #endif
