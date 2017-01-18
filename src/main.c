@@ -16,8 +16,9 @@ int main() {
 	uart0_init(UART_BAUD_SELECT(BAUD, F_CPU));
 
 	/* Initialize the typewriter. (Slews motors!) */
-	tw_init(&tw_state);
-	
+	tw_init(&tw_state, &rollStepper, NULL, NULL);
+	// tw_home(&tw_state);
+
 	while (true) {
 		if (uart0_available() > 0) {
 			char c = uart0_getc();

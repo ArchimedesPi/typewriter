@@ -16,6 +16,7 @@ typedef struct tw_state_t {
 	Stepper *daisywheel;
 } tw_state_t;
 
-void tw_init(tw_state_t *self);
+void tw_init(tw_state_t *self, Stepper *roll, Stepper *carriage, Stepper *daisywheel);
+void tw_home(tw_state_t *self);
 void tw_carriage_return(tw_state_t *self);
 void tw_newline(tw_state_t *self);

@@ -1,9 +1,15 @@
 #include "typewriter.h"
 
-void tw_init(tw_state_t *self) {
+void tw_init(tw_state_t *self, Stepper *roll, Stepper *carriage, Stepper *daisywheel) {
+	self->roll = roll;
+	self->carriage = carriage;
+	self->daisywheel = daisywheel;
+	
 	// wherever we started up on the paper is defined as 0
 	self->row = 0;
+}
 
+void tw_home(tw_state_t *self) {
 	while (!is_set(PORTB, PB1)) { /* until the touchoff is bumped */
 		step(self->carriage, -1); // step to the left
 	}
