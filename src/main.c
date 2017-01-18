@@ -42,7 +42,7 @@ int main() {
 			char c = uart0_getc();
 			switch (c) {
 			case 0x05: { /* ENQ */
-				uart0_putc(0x06);
+				uart0_putc(0x06); // ACK
 				break;
 			}
 
