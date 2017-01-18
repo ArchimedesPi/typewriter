@@ -11,6 +11,8 @@
 
 tw_state_t tw_state;
 
+_pin_t statusLed = def_pin(B,PB5);
+
 int main() {
 	sei(); // turn on interrupts
 	uart0_init(UART_BAUD_SELECT(BAUD, F_CPU));
