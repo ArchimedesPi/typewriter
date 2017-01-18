@@ -13,9 +13,25 @@ tw_state_t tw_state;
 
 _pin_t statusLed = def_pin(B,PB5);
 
+Stepper rollStepper;
+Stepper carriageStepper;
+
 int main() {
 	sei(); // turn on interrupts
 	uart0_init(UART_BAUD_SELECT(BAUD, F_CPU));
+
+	/* Initialize steppers */
+	stepper_init(&rollStepper,
+		def_pin(C, PC5),
+		def_pin(C, PC4),
+		def_pin(C, PC3),
+		def_pin(C, PC2));
+
+	stepper_init(&carriageStepper,
+		def_pin(C, PC1),
+		def_pin(C, PC0),
+		def_pin(B, PB4),
+		def_pin(B, PB3));
 
 	/* Initialize the typewriter. (Slews motors!) */
 	tw_init(&tw_state, &rollStepper, NULL, NULL);
