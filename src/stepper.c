@@ -1,36 +1,66 @@
 #include "stepper.h"
+#include <util/delay.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "util.h"
+#include "uart.h"
+
+void stepper_init(Stepper *self, _pin_t pin1, _pin_t pin2, _pin_t pin3, _pin_t pin4) {
+	self->pin1 = pin1;
+	self->pin2 = pin2;
+	self->pin3 = pin3;
+	self->pin4 = pin4;
+
+	set_output(self->pin1);
+	set_output(self->pin2);
+	set_output(self->pin3);
+	set_output(self->pin4);	
+}
+
+void stepper_float(Stepper *self) {
+	// deenergize all coils
+	set_pin(self->pin1, false);
+	set_pin(self->pin2, false);
+	set_pin(self->pin3, false);
+	set_pin(self->pin4, false);
+}
 
 void step(Stepper *self, int steps) {
 	int steps_to_go = abs(steps);
-	if (steps_to_go > 0) {
+	
+	while (steps_to_go > 0) {
 		self->step_num += (steps>0) ? 1 : -1;
 		_doStep(self);
+		_delay_ms(1);
 		steps_to_go--;
 	}
 }
 
 void _doStep(Stepper *self) {
 	switch (self->step_num % 4) {
-	case 0: /* 0101 */
-	case 2:
-		SET_PIN(self->pin1, 0);
-		SET_PIN(self->pin2, 1);
-		SET_PIN(self->pin3, 0);
-		SET_PIN(self->pin4, 1);
+	case 0: /* 1010 */
+		set_pin(self->pin1, true);
+		set_pin(self->pin2, false);
+		set_pin(self->pin3, true);
+		set_pin(self->pin4, false);
 		break;
 	case 1: /* 0110 */
-		SET_PIN(self->pin1, 0);
-		SET_PIN(self->pin2, 1);
-		SET_PIN(self->pin3, 1);
-		SET_PIN(self->pin4, 0);
+		set_pin(self->pin1, false);
+		set_pin(self->pin2, true);
+		set_pin(self->pin3, true);
+		set_pin(self->pin4, false);
+		break;
+	case 2: /* 0101 */
+		set_pin(self->pin1, false);
+		set_pin(self->pin2, true);
+		set_pin(self->pin3, false);
+		set_pin(self->pin4, true);
 		break;
 	case 3: /* 1001 */
-		SET_PIN(self->pin1, 1);
-		SET_PIN(self->pin2, 0);
-		SET_PIN(self->pin3, 0);
-		SET_PIN(self->pin4, 1);
+		set_pin(self->pin1, true);
+		set_pin(self->pin2, false);
+		set_pin(self->pin3, false);
+		set_pin(self->pin4, true);
 		break;
 	}
 }
