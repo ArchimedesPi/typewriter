@@ -29,4 +29,5 @@ void tw_carriage_return(tw_state_t *self) {
 void tw_newline(tw_state_t *self) {
 	step(self->roll, ROLL_SP_LINE);
 	self->row++;
+	stepper_float(self->roll);
 }
