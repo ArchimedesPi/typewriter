@@ -31,3 +31,13 @@ void tw_newline(tw_state_t *self) {
 	self->row++;
 	stepper_float(self->roll);
 }
+
+void tw_space(tw_state_t *self) {
+	step(self->carriage, CARRIAGE_SP_COL);
+	self->col++;
+}
+
+void tw_backspace(tw_state_t *self) {
+	step(self->carriage, -CARRIAGE_SP_COL);
+	self->col++;	
+}

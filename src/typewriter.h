@@ -20,3 +20,5 @@ void tw_init(tw_state_t *self, Stepper *roll, Stepper *carriage, Stepper *daisyw
 void tw_home(tw_state_t *self);
 void tw_carriage_return(tw_state_t *self);
 void tw_newline(tw_state_t *self);
+void tw_space(tw_state_t *self);
+void tw_backspace(tw_state_t *self);
