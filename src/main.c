@@ -56,11 +56,18 @@ int main() {
 				break;
 			}
 
-			case '\b': { /* Backspace */
+			case 0x1B: { /* Escape */
+				// TODO: slurp escape code, branch and execute
 				break;
 			}
 
-			case 0x1B: { /* Escape */
+			case ' ': { /* Space */
+				tw_space(&tw_state);
+				break;
+			}
+
+			case '\b': { /* Backspace */
+				tw_backspace(&tw_backspace);
 				break;
 			}
 
