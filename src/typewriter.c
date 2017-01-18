@@ -39,5 +39,5 @@ void tw_space(tw_state_t *self) {
 
 void tw_backspace(tw_state_t *self) {
 	step(self->carriage, -CARRIAGE_SP_COL);
-	self->col++;	
+	self->col--;	
 }
