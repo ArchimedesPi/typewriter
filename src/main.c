@@ -67,7 +67,7 @@ int main() {
 			}
 
 			case '\b': { /* Backspace */
-				tw_backspace(&tw_backspace);
+				tw_backspace(&tw_state);
 				break;
 			}
 
