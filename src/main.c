@@ -34,7 +34,7 @@ int main() {
 		def_pin(B, PB3));
 
 	/* Initialize the typewriter. (Slews motors!) */
-	tw_init(&tw_state, &rollStepper, NULL, NULL);
+	tw_init(&tw_state, &rollStepper, &carriageStepper, NULL);
 	// tw_home(&tw_state);
 
 	while (true) {
