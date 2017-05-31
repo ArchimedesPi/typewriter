@@ -37,4 +37,4 @@ Available sequences are:
 | sb            | ✔      | Turns on subscript mode                                                                 |
 | sts$ts        | ✘      | [*configuration*] set tab stop to `$ts` spaces                                          |
 
-Modal sequences are called as given to be turned on, and called with a prefixed `!` to be turned off.
+Modal sequences are called as given to be turned on, and called with a prefixed `!` to be turned off, *e.g.* `^[b` and `^[!b`.
