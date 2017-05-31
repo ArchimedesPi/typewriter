@@ -1,4 +1,5 @@
 #pragma once
+#include <avr/pgmspace.h>
 #include "util.h"
 #include "config.h"
 #include "stepper.h"
@@ -22,3 +23,4 @@ void tw_carriage_return(tw_state_t *self);
 void tw_newline(tw_state_t *self);
 void tw_space(tw_state_t *self);
 void tw_backspace(tw_state_t *self);
+void tw_putch(tw_state_t *self, char c);
