@@ -72,6 +72,8 @@ int main() {
 			}
 
 			default: /* Print character */
+				tw_putch(&tw_state, c); // print character
+				tw_space(&tw_state); // step one space ahead on the paper
 				break;
 			}
 		}
