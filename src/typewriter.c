@@ -40,15 +40,19 @@ void tw_home(tw_state_t *self) {
 		step(self->daisywheel, -1);
 	}
 	self->dw_char = 0;
+	// float
+	stepper_float(self->daisywheel);
+	stepper_float(self->carriage);
 }
 
 void tw_carriage_return(tw_state_t *self) {
-	step(self->carriage, -CARRIAGE_SP_COL*self->col);
 	#ifdef DEBUG
 	uart0_puts_P("tw_carriage_return()\n");
 	#endif
 
+	step_sp(self->carriage, -CARRIAGE_SP_COL*self->col, 8);
 	self->col = 0;
+	stepper_float(self->carriage);
 }
 
 void tw_newline(tw_state_t *self) {
@@ -68,6 +72,7 @@ void tw_space(tw_state_t *self) {
 
 	step(self->carriage, CARRIAGE_SP_COL);
 	self->col++;
+	stepper_float(self->carriage);
 }
 
 void tw_backspace(tw_state_t *self) {
@@ -77,6 +82,7 @@ void tw_backspace(tw_state_t *self) {
 
 	step(self->carriage, -CARRIAGE_SP_COL);
 	self->col--;	
+	stepper_float(self->carriage);
 }
 
 void tw_putch(tw_state_t *self, char c) {
@@ -94,4 +100,6 @@ void tw_putch(tw_state_t *self, char c) {
 		step(self->carriage, CARRIAGE_SP_COL * ds);
 		self->dw_char += ds;
 	}
+	// release
+	stepper_float(self->daisywheel);
 }
