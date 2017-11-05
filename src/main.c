@@ -23,6 +23,7 @@ _pin_t statusLed = def_pin(B,PB5);
 
 Stepper rollStepper;
 Stepper carriageStepper;
+Stepper daisywheelStepper;
 
 int main() {
 	stdout = &stdout_;
@@ -43,6 +44,11 @@ int main() {
 		def_pin(B, PB4),
 		def_pin(B, PB3));
 
+	stepper_init(&daisywheelStepper,
+		def_pin(B, PB2),
+		def_pin(B, PB1),
+		def_pin(D, PD7),
+		def_pin(B, PB0));
 	/* Initialize the typewriter. (Slews motors!) */
 	tw_init(&tw_state, &rollStepper, &carriageStepper, NULL);
 	// tw_home(&tw_state);
