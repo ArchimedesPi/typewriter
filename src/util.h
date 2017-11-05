@@ -1,5 +1,4 @@
-#ifndef __UTIL_H__
-#define __UTIL_H__
+#pragma once
 
 #include <stdint.h>
 #include <avr/io.h>
@@ -24,4 +23,3 @@ typedef int32_t i32;
 #define check_bit(x, bit) (_SFR_BYTE(x) & (1<<_BV(bit)))
 #define is_set(x, bit) check_bit(x, bit)
 
-#endif
