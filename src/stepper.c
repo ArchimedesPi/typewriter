@@ -25,15 +25,19 @@ void stepper_float(Stepper *self) {
 	set_pin(self->pin4, false);
 }
 
-void step(Stepper *self, int steps) {
+void step_sp(Stepper *self, int steps, int del) {
 	int steps_to_go = abs(steps);
 	
 	while (steps_to_go > 0) {
 		self->step_num += (steps>0) ? 1 : -1;
 		_doStep(self);
-		_delay_ms(1);
+		delay_ms(del);
 		steps_to_go--;
 	}
+}
+
+void step(Stepper *self, int steps) {
+	step_sp(self, steps, 10);
 }
 
 void _doStep(Stepper *self) {
