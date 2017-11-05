@@ -14,7 +14,7 @@ typedef struct _pin_t {
 #define def_pin(po, pi) _def_pin(po, pi)
 
 #define set_pin(x, v) *x.r_port ^= (-v ^ *x.r_port) & _BV(x.pin)
-#define get_pin(x) (*x.r_pin & _BV(x.pin))
+#define get_pin(x) (!!(*x.r_pin & _BV(x.pin)))
 #define set_output(x) *x.r_ddr |= _BV(x.pin)
 #define set_input(x) *x.r_ddr &= ~_BV(x.pin)
 #define set_input_pullup(x) set_input(x); set_pin(x, 1)
