@@ -42,12 +42,18 @@ void tw_home(tw_state_t *self) {
 	while (get_pin(self->touchoff)) { /* until the touchoff is bumped */
 		step(self->carriage, -1); // step to the left
 	}
-	self->col = 0;
+	step(self->carriage, -5);
 
 	while (!get_pin(self->touchoff)) { /* while the touchoff is pressed */
 		step(self->daisywheel, -1);
 	}
+	step(self->daisywheel, -5);
 	self->dw_char = 0;
+
+	// unhook
+	tw_space(self);
+	self->col = 0;
+
 	// float
 	stepper_float(self->daisywheel);
 	stepper_float(self->carriage);
@@ -115,6 +121,9 @@ void tw_putch(tw_state_t *self, char c) {
 		step(self->carriage, CARRIAGE_SP_COL * ds);
 		self->dw_char += ds;
 	}
+
+	// slam
+
 	// release
 	stepper_float(self->daisywheel);
 }
