@@ -9,6 +9,14 @@
 #include "uart.h"
 #include "typewriter.h"
 
+static int uart_putchar(char c, FILE *stream) {
+	uart0_putc(c);
+	return 0;
+}
+
+static FILE stdout_ = FDEV_SETUP_STREAM(uart_putchar, NULL,
+                                         _FDEV_SETUP_WRITE);
+
 tw_state_t tw_state;
 
 _pin_t statusLed = def_pin(B,PB5);
@@ -17,6 +25,8 @@ Stepper rollStepper;
 Stepper carriageStepper;
 
 int main() {
+	stdout = &stdout_;
+
 	sei(); // turn on interrupts
 	uart0_init(UART_BAUD_SELECT(BAUD, F_CPU));
 
