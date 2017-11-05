@@ -54,9 +54,9 @@ int main() {
 	touchoff = def_pin(D, PD6);
 
 	/* Initialize the typewriter. (Slews motors!) */
-	// tw_home(&tw_state);
 	tw_init(&tw_state, &rollStepper, &carriageStepper, &daisywheelStepper,
 				touchoff);
+	tw_home(&tw_state);
 
 	while (true) {
 		if (uart0_available() > 0) {
