@@ -4,6 +4,7 @@
 #include "util.h"
 #include "config.h"
 #include "stepper.h"
+#include "pin.h"
 
 typedef struct tw_state_t {
 	// head position in spaces/newlines
@@ -16,9 +17,13 @@ typedef struct tw_state_t {
 	Stepper *carriage;
 	Stepper *roll;
 	Stepper *daisywheel;
+
+	/* the touchoff */
+	_pin_t touchoff;
 } tw_state_t;
 
-void tw_init(tw_state_t *self, Stepper *roll, Stepper *carriage, Stepper *daisywheel);
+void tw_init(tw_state_t *self, Stepper *roll, Stepper *carriage, Stepper *daisywheel,
+			 _pin_t touchoff);
 void tw_home(tw_state_t *self);
 void tw_carriage_return(tw_state_t *self);
 void tw_newline(tw_state_t *self);

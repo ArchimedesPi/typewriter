@@ -5,22 +5,28 @@
 #define char_to_daisy(c) pgm_read_byte(&(CHAR_TO_DAISY_TABLE[(u8)c - 0x20]))
 const u8 CHAR_TO_DAISY_TABLE[95] PROGMEM = {};
 
-void tw_init(tw_state_t *self, Stepper *roll, Stepper *carriage, Stepper *daisywheel) {
+void tw_init(tw_state_t *self, Stepper *roll, Stepper *carriage, Stepper *daisywheel,
+		     _pin_t touchoff)
+{
 	self->roll = roll;
 	self->carriage = carriage;
 	self->daisywheel = daisywheel;
+
+	self->touchoff = touchoff;
+	set_input_pullup(self->touchoff);
 	
 	// wherever we started up on the paper is defined as 0
 	self->row = 0;
 }
 
 void tw_home(tw_state_t *self) {
-	while (!is_set(PORTB, PB1)) { /* until the touchoff is bumped */
+
+	while (get_pin(self->touchoff)) { /* until the touchoff is bumped */
 		step(self->carriage, -1); // step to the left
 	}
 	self->col = 0;
 
-	while (is_set(PORTB, PB1)) { /* while the touchoff is pressed */
+	while (!get_pin(self->touchoff)) { /* while the touchoff is pressed */
 		step(self->daisywheel, -1);
 	}
 	self->dw_char = 0;
